@@ -8,30 +8,56 @@ export const useContextApp = () => {
 
 const AppContext = ({ children }) => {
    const [searchInput, setSearchInput] = useState('');
+   const [repoName, setRepoName] = useState('');
    const [users, setUsers] = useState([]);
    const [repos, setRepos] = useState([]);
+   const [errorRequest, setErrorRequest] = useState(false);
+
+   console.log(users);
 
    useEffect(() => {
+      setErrorRequest(false);
       if (searchInput) {
          fetch(
-            `https://api.github.com/search/users?q=${searchInput}8&per_page=5`
+            `https://api.github.com/search/users?q=${searchInput}&per_page=5`,
+            {
+               method: 'GET',
+               headers: {
+                  'User-Agent': 'request',
+               },
+            }
          )
-            .then((res) => res.json())
-            .then((data) => setUsers(data.items));
+            .then((res) => {
+               if (res.status === 200) {
+                  return res.json();
+               }
+               setErrorRequest(true);
+            })
+            .then((data) => {
+               setUsers(data.items);
+            });
       }
    }, [searchInput]);
 
    useEffect(() => {
-      if (searchInput) {
-         fetch(`https://api.github.com/users/${searchInput}/repos`)
+      if (repoName) {
+         fetch(`https://api.github.com/users/${repoName}/repos`)
             .then((res) => res.json())
             .then((data) => setRepos(data));
       }
-   }, [searchInput]);
+   }, [repoName]);
 
-   console.log(users);
    return (
-      <contextApp.Provider value={{ users, repos, setSearchInput }}>
+      <contextApp.Provider
+         value={{
+            users,
+            repos,
+            searchInput,
+            setSearchInput,
+            setRepoName,
+            errorRequest,
+         }}
+      >
          {children}
       </contextApp.Provider>
    );

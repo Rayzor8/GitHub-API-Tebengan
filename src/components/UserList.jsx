@@ -4,12 +4,13 @@ import ErrorAlert from './ErrorAlert';
 import UserData from './UserData';
 
 // autocomplete component
-
 const UserLits = () => {
-   const { users, setRepoName, errorRequest,setUsers,setSearchInput } = useContextApp();
+   const { users, setRepoName, errorRequest, setUsers, setSearchInput } =
+      useContextApp();
+
    const handleClickUser = (userLogin) => {
       setRepoName(userLogin);
-      setSearchInput('')
+      setSearchInput('');
       setUsers([]);
    };
 

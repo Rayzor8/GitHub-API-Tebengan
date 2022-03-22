@@ -1,5 +1,6 @@
 import { useState, createContext, useContext, useEffect } from 'react';
 
+
 export const contextApp = createContext();
 
 export const useContextApp = () => {
@@ -12,9 +13,10 @@ const AppContext = ({ children }) => {
    const [users, setUsers] = useState([]);
    const [repos, setRepos] = useState([]);
    const [errorRequest, setErrorRequest] = useState(false);
+   const [page, setPage] = useState(1);
 
-   console.log(users);
-   console.log(searchInput.length);
+
+
    useEffect(() => {
       setErrorRequest(false);
       if (searchInput === '') setUsers((prev) => (prev = []));
@@ -60,6 +62,8 @@ const AppContext = ({ children }) => {
             errorRequest,
             setUsers,
             setRepos,
+            page,
+            setPage,
          }}
       >
          {children}

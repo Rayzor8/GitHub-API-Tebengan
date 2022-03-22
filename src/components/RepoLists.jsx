@@ -1,14 +1,29 @@
 import React from 'react';
 import { useContextApp } from '../contexts/AppContext';
 import Pagination from './Pagination';
+import { REPO_PER_PAGE } from '../utils/contants';
+
 const RepoLists = () => {
-   const { repos, errorRequest } = useContextApp();
+   const { repos, errorRequest, page, setPage } = useContextApp();
+
+   const startIndex = (page - 1) * REPO_PER_PAGE;
+   const endIndex = page * REPO_PER_PAGE;
+   const selectedRepos = repos.slice(startIndex, endIndex);
+   
+   const totalPages = Math.ceil(repos.length / REPO_PER_PAGE)
+
    return (
       <>
+         {repos.length > 0 && (
+            <h1 className="text-xl my-2 font-bold">Repolists Page {page}</h1>
+         )}
+         {repos.length > 0 && (
+            <Pagination totalPages={totalPages} page={page} setPage={setPage} />
+         )}
          <div className="grid gap-4  grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             {repos.length > 0 &&
                !errorRequest &&
-               repos.map((repo) => {
+               selectedRepos.map((repo) => {
                   return (
                      <div
                         key={repo.id}
@@ -21,7 +36,7 @@ const RepoLists = () => {
                            )
                         }
                      >
-                        <h1>Repository List</h1>
+                        <small>{repo.id}</small>
                         <p>{repo.name}</p>
                         <p>{repo.description}</p>
                         <p>{repo.language}</p>
@@ -29,7 +44,6 @@ const RepoLists = () => {
                   );
                })}
          </div>
-         {repos.length > 0 && <Pagination />}
       </>
    );
 };

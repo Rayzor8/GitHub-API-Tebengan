@@ -1,17 +1,18 @@
 import React from 'react';
 import { useContextApp } from '../contexts/AppContext';
 import { FaSearch } from 'react-icons/fa';
-import UserLits from './UserLits';
-
+import UserList from './UserList';
 
 const InputForm = ({ placeholder }) => {
-   const {  searchInput, setSearchInput } =
-      useContextApp();
-
+   const { searchInput, setSearchInput } = useContextApp();
 
    const handleSubmit = (e) => {
       e.preventDefault();
       setSearchInput((prev) => prev);
+   };
+
+   const handleChange = (e) => {
+      setSearchInput((prev) => (prev = e.target.value));
    };
 
    return (
@@ -19,7 +20,7 @@ const InputForm = ({ placeholder }) => {
          <div className="mb-3 xl:w-96">
             <label
                htmlFor="inputSearch"
-               className="form-label inline-block mb-2 text-gray-700 text-left"
+               className="form-label inline-block mb-2 text-gray-700 text-left text-xl font-bold"
             >
                Search User
             </label>
@@ -29,16 +30,16 @@ const InputForm = ({ placeholder }) => {
                   type="search"
                   id="inputSearch"
                   value={searchInput}
-                  onChange={(e) =>
-                     setSearchInput((prev) => (prev = e.target.value))
-                  }
+                  onChange={handleChange}
                   autoComplete="off"
                   placeholder={placeholder}
                />
                <FaSearch className="text-white h-[2.4rem] w-[2.4rem] bg-blue-600 p-1 rounded-r-md" />
-            </div> 
+            </div>
             
-            <UserLits/>
+            {searchInput.length < 4 && <h1 className='my-2 italic text-xs text-blue-600'>User length Min 4 Characters (avoid request status 403)</h1>}
+
+            <UserList />
          </div>
       </form>
    );

@@ -14,10 +14,12 @@ const AppContext = ({ children }) => {
    const [errorRequest, setErrorRequest] = useState(false);
 
    console.log(users);
-
+   console.log(searchInput.length);
    useEffect(() => {
       setErrorRequest(false);
-      if (searchInput) {
+      if (searchInput === '') setUsers((prev) => (prev = []));
+
+      if (searchInput.length > 3) {
          fetch(
             `https://api.github.com/search/users?q=${searchInput}&per_page=5`,
             {
@@ -56,6 +58,8 @@ const AppContext = ({ children }) => {
             setSearchInput,
             setRepoName,
             errorRequest,
+            setUsers,
+            setRepos,
          }}
       >
          {children}

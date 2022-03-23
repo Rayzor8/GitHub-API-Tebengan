@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContextApp } from '../contexts/AppContext';
 import ErrorAlert from './ErrorAlert';
-import UserData from './UserData';
+import UserItem from './UserItem';
 
 // autocomplete component
 const UserLits = () => {
@@ -17,13 +17,12 @@ const UserLits = () => {
    return (
       <>
          {errorRequest && <ErrorAlert />}
-
          <ul className="flex flex-col gap-2 py-2">
             {users &&
                !errorRequest &&
                users.map((user) => {
                   return (
-                     <UserData
+                     <UserItem
                         key={user.id}
                         user={user}
                         handleClickUser={handleClickUser}

@@ -22,7 +22,7 @@ const InputForm = ({ placeholder }) => {
                htmlFor="inputSearch"
                className="form-label inline-block mb-2 text-gray-700 text-left text-xl font-bold"
             >
-               Search User
+               Search GitHub users
             </label>
             <div className="flex items-center gap-1">
                <input

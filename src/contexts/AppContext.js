@@ -13,8 +13,6 @@ const AppContext = ({ children }) => {
    const [users, setUsers] = useState([]);
    const [repos, setRepos] = useState([]);
    const [errorRequest, setErrorRequest] = useState(false);
-   const [page, setPage] = useState(1);
-
 
 
    useEffect(() => {
@@ -62,8 +60,6 @@ const AppContext = ({ children }) => {
             errorRequest,
             setUsers,
             setRepos,
-            page,
-            setPage,
          }}
       >
          {children}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserData = ({ user, handleClickUser}) => {
+const UserItem = ({ user, handleClickUser}) => {
    return (
       <li
          key={user.id}
@@ -18,4 +18,4 @@ const UserData = ({ user, handleClickUser}) => {
    );
 };
 
-export default UserData;
+export default UserItem;

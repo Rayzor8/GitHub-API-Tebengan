@@ -8,20 +8,19 @@ export const useContextApp = () => {
 };
 
 const AppContext = ({ children }) => {
-   const [searchInput, setSearchInput] = useState('');
+   const [searchQuery, setSearchQuery] = useState('');
    const [repoName, setRepoName] = useState('');
    const [users, setUsers] = useState([]);
    const [repos, setRepos] = useState([]);
    const [errorRequest, setErrorRequest] = useState(false);
 
-
    useEffect(() => {
       setErrorRequest(false);
-      if (searchInput === '') setUsers((prev) => (prev = []));
+      if (searchQuery === '') setUsers((prev) => (prev = []));
 
-      if (searchInput.length > 3) {
+      if (searchQuery) {
          fetch(
-            `https://api.github.com/search/users?q=${searchInput}&per_page=5`,
+            `https://api.github.com/search/users?q=${searchQuery}&per_page=5`,
             {
                method: 'GET',
                headers: {
@@ -39,7 +38,7 @@ const AppContext = ({ children }) => {
                setUsers(data.items);
             });
       }
-   }, [searchInput]);
+   }, [searchQuery]);
 
    useEffect(() => {
       if (repoName) {
@@ -54,8 +53,8 @@ const AppContext = ({ children }) => {
          value={{
             users,
             repos,
-            searchInput,
-            setSearchInput,
+            searchQuery,
+            setSearchQuery,
             setRepoName,
             errorRequest,
             setUsers,

@@ -5,12 +5,12 @@ import UserItem from './UserItem';
 
 // autocomplete component
 const UserLits = () => {
-   const { users, setRepoName, errorRequest, setUsers, setSearchInput } =
+   const { users, setRepoName, errorRequest, setUsers, setSearchQuery } =
       useContextApp();
 
    const handleClickUser = (userLogin) => {
       setRepoName(userLogin);
-      setSearchInput('');
+      setSearchQuery('');
       setUsers([]);
    };
 
